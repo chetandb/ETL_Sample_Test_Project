@@ -1,7 +1,6 @@
+import pytest
 import pandas as pd
-
 from transform import transform_data
-
 
 def test_transform_data_with_missing_values():
     # Sample data with missing values
@@ -10,9 +9,10 @@ def test_transform_data_with_missing_values():
     # Apply transformation
     transformed_df = transform_data(df)
 
-    # Example: Check if missing values are filled with 0 (depending on your transformation logic)
+    # Check if missing values are filled with 0
     assert transformed_df['existing_column'].isna().sum() == 0, "Missing values should be handled"
 
-    # Example: Check if new_column is correctly calculated even with missing values
+    # Check if new_column is correctly calculated
     assert 'new_column' in transformed_df.columns, "Transformation should add new_column"
-    assert all(transformed_df['new_column'].fillna(0) == df['existing_column'].fillna(0) * 2), "Transformation logic is incorrect"
+    expected_new_column = [20, 0, 60, 0, 100]
+    assert all(transformed_df['new_column'] == expected_new_column), "Transformation logic is incorrect"
