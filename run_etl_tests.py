@@ -1,5 +1,4 @@
 import os
-
 import pytest
 
 from extract import extract_data
@@ -8,7 +7,6 @@ from transform import transform_data
 
 def run_etl():
     # Paths to the data files
-    """./config.yaml"""
     input_data_path = './input_data.csv'
     transformed_data_path = './transformed_data.csv'
 
@@ -29,6 +27,7 @@ def run_etl():
     # load_data_to_db(transformed_df, config)
     print("Data Loading Complete.")
 
+
 def clean_up():
     # Remove generated files
     transformed_data_path = './transformed_data.csv'
@@ -36,10 +35,21 @@ def clean_up():
         os.remove(transformed_data_path)
     print("Clean up complete.")
 
+
 def run_tests():
     print("Starting Tests...")
-    pytest.main(["-v", "--disable-warnings", "./"])
+    test_files = [
+        "./test_extract.py",
+        "./test_transform_complex.py",
+        "./test_transform_conditional.py",
+        "./test_transform_integrity.py",
+        "./test_transform_missing_values.py",
+        "./test_transform_unique_constraints.py"
+    ]
+    pytest_args = ["-v", "--disable-warnings"] + test_files
+    pytest.main(pytest_args)
     print("Tests Complete.")
+
 
 if __name__ == "__main__":
     try:

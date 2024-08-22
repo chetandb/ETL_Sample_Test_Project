@@ -1,3 +1,8 @@
 def transform_data(df):
-    df['new_column'] = df['existing_column'].apply(lambda x: x * 2)
+    # Example: Fill missing values with 0
+    df['existing_column'].fillna(0, inplace=True)
+
+    # Example transformation: doubling the values in 'existing_column'
+    df['new_column'] = df['existing_column'] * 2
+
     return df
