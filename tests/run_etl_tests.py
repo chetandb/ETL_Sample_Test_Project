@@ -1,13 +1,13 @@
 import os
 import pytest
 
-from extract import extract_data
-from transform import transform_data
+from src.extract import extract_data
+from src.transform import transform_data
 
 
 def run_etl():
     # Paths to the data files
-    input_data_path = './input_data.csv'
+    input_data_path = '../csv/input_data.csv'
     transformed_data_path = './transformed_data.csv'
 
     # 1. Extract Data
@@ -39,12 +39,12 @@ def clean_up():
 def run_tests():
     print("Starting Tests...")
     test_files = [
-        "./test_extract.py",
-        "./test_transform_complex.py",
-        "./test_transform_conditional.py",
-        "./test_transform_integrity.py",
-        "./test_transform_missing_values.py",
-        "./test_transform_unique_constraints.py"
+        "../tests/test_extract.py",
+        "../tests/test_transform_complex.py",
+        "../tests/test_transform_conditional.py",
+        "../tests/test_transform_integrity.py",
+        "../tests/test_transform_missing_values.py",
+        "../tests/test_transform_unique_constraints.py"
     ]
     pytest_args = ["-v", "--disable-warnings"] + test_files
     pytest.main(pytest_args)
