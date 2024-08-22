@@ -40,6 +40,8 @@ def run_tests():
     print("Starting Tests...")
     test_files = [
         "../tests/test_extract.py",
+        "../tests/test_transform.py",
+        "../tests/test_load.py",
         "../tests/test_transform_complex.py",
         "../tests/test_transform_conditional.py",
         "../tests/test_transform_integrity.py",
