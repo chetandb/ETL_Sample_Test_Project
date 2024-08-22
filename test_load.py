@@ -1,8 +1,7 @@
 import pytest
 import pandas as pd
-
-import load
 from load import load_data_to_db
+from unittest.mock import patch
 
 @pytest.fixture
 def config():
@@ -14,11 +13,16 @@ def config():
         'dbname': 'etl_db'
     }
 
-def test_load_data_to_db(config, mocker):
-    mocker.patch('load.create_engine')
-    df = pd.DataFrame({'existing_column': [1, 2, 3]})
-    load_data_to_db(df, config)
+def test_load_data_to_db_success(config, mocker):
+    df = pd.DataFrame({'existing_column': [1, 2, 3], 'new_column': [2, 4, 6]})
 
-    # Assuming load_data_to_db has proper logging
-    # Here, we mock and verify if the SQLAlchemy's engine.connect was called.
-    load.create_engine.assert_called_once()
+    with patch('load.create_engine') as mock_create_engine:
+        load_data_to_db(df, config)
+        mock_create_engine.assert_called_once()
+
+def test_load_data_to_db_empty(config, mocker):
+    df = pd.DataFrame()
+
+    with patch('load.create_engine') as mock_create_engine:
+        load_data_to_db(df, config)
+        mock_create_engine.assert_called_once()
