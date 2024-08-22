@@ -1,4 +1,3 @@
-import pytest
 from extract import extract_data
 
 def test_extract_data():
