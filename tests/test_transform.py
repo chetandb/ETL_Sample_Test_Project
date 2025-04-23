@@ -1,6 +1,10 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 import pytest
 import pandas as pd
-from src.transform import transform_data
+from ..src.transform import transform_data
 
 def test_transform_data_valid():
     df = pd.DataFrame({'existing_column': [10, 20, 30]})

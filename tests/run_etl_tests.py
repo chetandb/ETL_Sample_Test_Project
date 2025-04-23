@@ -1,5 +1,10 @@
 import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pytest
+
+# Ensure src directory is in PYTHONPATH
+os.environ['PYTHONPATH'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from src.extract import extract_data
 from src.transform import transform_data
@@ -38,16 +43,18 @@ def clean_up():
 
 def run_tests():
     print("Starting Tests...")
+    print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
     test_files = [
-        "../tests/test_extract.py",
-        "../tests/test_transform.py",
-        "../tests/test_load.py",
-        "../tests/test_transform_complex.py",
-        "../tests/test_transform_conditional.py",
-        "../tests/test_transform_integrity.py",
-        "../tests/test_transform_missing_values.py",
-        "../tests/test_transform_unique_constraints.py"
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_extract.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_transform.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_load.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_transform_complex.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_transform_conditional.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_transform_integrity.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_transform_missing_values.py")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "test_transform_unique_constraints.py"))
     ]
+    print("Resolved test file paths:", test_files)
     pytest_args = ["-v", "--disable-warnings"] + test_files
     pytest.main(pytest_args)
     print("Tests Complete.")
@@ -56,7 +63,7 @@ def run_tests():
 if __name__ == "__main__":
     try:
         # Run the ETL process
-        run_etl()
+        # run_etl()  # Temporarily skip the ETL process
 
         # Run the tests
         run_tests()
