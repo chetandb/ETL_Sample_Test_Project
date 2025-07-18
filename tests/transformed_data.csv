@@ -1,0 +1,6 @@
+id,existing_column,name,new_column,status
+1,10,Alice,20,Low
+2,20,Bob,40,Low
+3,30,Charlie,60,High
+4,40,David,80,High
+5,50,Eva,100,High

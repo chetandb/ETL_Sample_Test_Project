@@ -1,14 +1,18 @@
 import os
+import sys
 import pytest
 
-from src.extract import extract_data
-from src.transform import transform_data
+# Add src directory to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+from extract import extract_data
+from transform import transform_data
 
 
 def run_etl():
     # Paths to the data files
-    input_data_path = '../csv/input_data.csv'
-    transformed_data_path = './transformed_data.csv'
+    input_data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../csv/input_data.csv'))
+    transformed_data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'transformed_data.csv'))
 
     # 1. Extract Data
     print("Starting Data Extraction...")
@@ -21,10 +25,19 @@ def run_etl():
     transformed_df.to_csv(transformed_data_path, index=False)
     print("Data Transformation Complete.")
 
-    # 3. Load Data (Simulated)
+    # 3. Load Data (Mocked)
     print("Starting Data Loading...")
-    # Load to DB (Here we skip actual DB load, you can enable it as needed)
-    # load_data_to_db(transformed_df, config)
+    # Mock the DB load step so no real connection is made
+    try:
+        from unittest.mock import patch
+        with patch('src.load.create_engine') as mock_create_engine:
+            mock_create_engine.return_value = None
+            # If you want to call load_data_to_db, it will use the mock
+            # from src.load import load_data_to_db
+            # config = {...}  # Provide config if needed
+            # load_data_to_db(transformed_df, config)
+    except ImportError:
+        print("unittest.mock not available, skipping DB mock.")
     print("Data Loading Complete.")
 
 
@@ -39,14 +52,14 @@ def clean_up():
 def run_tests():
     print("Starting Tests...")
     test_files = [
-        "../tests/test_extract.py",
-        "../tests/test_transform.py",
-        "../tests/test_load.py",
-        "../tests/test_transform_complex.py",
-        "../tests/test_transform_conditional.py",
-        "../tests/test_transform_integrity.py",
-        "../tests/test_transform_missing_values.py",
-        "../tests/test_transform_unique_constraints.py"
+        "tests/test_extract.py",
+        "tests/test_transform.py",
+        "tests/test_load.py",
+        "tests/test_transform_complex.py",
+        "tests/test_transform_conditional.py",
+        "tests/test_transform_integrity.py",
+        "tests/test_transform_missing_values.py",
+        "tests/test_transform_unique_constraints.py"
     ]
     pytest_args = ["-v", "--disable-warnings"] + test_files
     pytest.main(pytest_args)
