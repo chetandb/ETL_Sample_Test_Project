@@ -1,11 +1,7 @@
 import os
+import sys
 import pytest
-
-# Ensure src directory is in PYTHONPATH
-os.environ['PYTHONPATH'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
-
-# Add src directory to Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 from extract import extract_data
 from transform import transform_data
@@ -53,18 +49,16 @@ def clean_up():
 
 def run_tests():
     print("Starting Tests...")
-    print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
     test_files = [
-        "../tests/test_extract.py",
-        "../tests/test_transform.py",
-        "../tests/test_load.py",
-        "../tests/test_transform_complex.py",
-        "../tests/test_transform_conditional.py",
-        "../tests/test_transform_integrity.py",
-        "../tests/test_transform_missing_values.py",
-        "../tests/test_transform_unique_constraints.py"
+        "tests/test_extract.py",
+        "tests/test_transform.py",
+        "tests/test_load.py",
+        "tests/test_transform_complex.py",
+        "tests/test_transform_conditional.py",
+        "tests/test_transform_integrity.py",
+        "tests/test_transform_missing_values.py",
+        "tests/test_transform_unique_constraints.py"
     ]
-    print("Resolved test file paths:", test_files)
     pytest_args = ["-v", "--disable-warnings"] + test_files
     pytest.main(pytest_args)
     print("Tests Complete.")
@@ -73,8 +67,7 @@ def run_tests():
 if __name__ == "__main__":
     try:
         # Run the ETL process
-        # run_etl()  # Temporarily skip the ETL process
-
+        run_etl()
         # Run the tests
         run_tests()
     finally:
