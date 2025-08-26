@@ -59,9 +59,19 @@ def run_tests():
         "tests/test_transform_missing_values.py",
         "tests/test_transform_unique_constraints.py"
     ]
-    pytest_args = ["-v", "--disable-warnings"] + test_files
+    # Create reports directory if it doesn't exist
+    import os
+    os.makedirs("reports", exist_ok=True)
+    
+    pytest_args = [
+        "-v", 
+        "--disable-warnings", 
+        "--html=reports/test_report.html", 
+        "--self-contained-html"
+    ] + test_files
     pytest.main(pytest_args)
     print("Tests Complete.")
+    print("HTML report generated at: reports/test_report.html")
 
 
 if __name__ == "__main__":
