@@ -1,6 +1,7 @@
 import os
 import sys
 import pytest
+from pathlib import Path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 from extract import extract_data
@@ -8,20 +9,21 @@ from transform import transform_data
 
 
 def run_etl():
-    # Paths to the data files
-    input_data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../csv/input_data.csv'))
-    transformed_data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'transformed_data.csv'))
+    # Use pathlib for better path handling
+    base_dir = Path(__file__).parent.parent
+    input_data_path = base_dir / 'csv' / 'input_data.csv'
+    transformed_data_path = base_dir / 'tests' / 'transformed_data.csv'
 
     # 1. Extract Data
     print("Starting Data Extraction...")
-    df = extract_data(input_data_path)
-    print("Data Extraction Complete.")
+    df = extract_data(str(input_data_path))
+    print(f"Data Extraction Complete. Extracted {len(df)} rows.")
 
     # 2. Transform Data
     print("Starting Data Transformation...")
     transformed_df = transform_data(df)
     transformed_df.to_csv(transformed_data_path, index=False)
-    print("Data Transformation Complete.")
+    print(f"Data Transformation Complete. Transformed {len(transformed_df)} rows.")
 
     # 3. Load Data (Mocked)
     print("Starting Data Loading...")
@@ -40,10 +42,11 @@ def run_etl():
 
 
 def clean_up():
-    # Remove generated files
-    transformed_data_path = './transformed_data.csv'
-    if os.path.exists(transformed_data_path):
-        os.remove(transformed_data_path)
+    # Remove generated files using pathlib
+    base_dir = Path(__file__).parent.parent
+    transformed_data_path = base_dir / 'tests' / 'transformed_data.csv'
+    if transformed_data_path.exists():
+        transformed_data_path.unlink()
     print("Clean up complete.")
 
 

@@ -1,0 +1,6 @@
+INFO     extract:extract.py:20 Successfully extracted 5 rows from csv/input_data.csv
+INFO     extract:extract.py:20 Successfully extracted 5 rows from csv/input_data.csv
+ERROR    extract:extract.py:24 Failed to extract data from csv/non_existent_file.csv: Input file not found: csv/non_existent_file.csv
+WARNING  extract:extract.py:16 Input file is empty: csv/empty_input.csv
+INFO     load:load.py:12 Successfully loaded 3 rows to database
+INFO     load:load.py:12 Successfully loaded 0 rows to database
