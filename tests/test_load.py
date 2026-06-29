@@ -1,29 +1,27 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-import pytest
 import pandas as pd
+import pytest
 from unittest.mock import patch
+
 from load import load_data_to_db
 
-@pytest.fixture
-def config():
-    return {
-        'host': 'localhost',
-        'port': 5432,
-        'user': 'etl_user',
-        'password': 'password',
-        'dbname': 'etl_db'
-    }
 
-def test_load_data_to_db_success(config):
-    df = pd.DataFrame({'existing_column': [1, 2, 3], 'new_column': [2, 4, 6]})
-    with patch('load.create_engine') as mock_create_engine:
-        load_data_to_db(df, config)
+def test_load_data_to_db_success(db_config):
+    df = pd.DataFrame({"existing_column": [1, 2, 3], "new_column": [2, 4, 6]})
+    with patch("load.create_engine") as mock_create_engine:
+        load_data_to_db(df, db_config)
         mock_create_engine.assert_called_once()
 
-def test_load_data_to_db_empty(config):
+
+def test_load_data_to_db_empty(db_config):
     df = pd.DataFrame()
-    with patch('load.create_engine') as mock_create_engine:
-        load_data_to_db(df, config)
-        mock_create_engine.assert_called_once()
+    with patch("load.create_engine") as mock_create_engine:
+        load_data_to_db(df, db_config)
+        mock_create_engine.assert_not_called()
+
+
+def test_load_data_to_db_missing_config():
+    df = pd.DataFrame({"existing_column": [1]})
+    bad_config = {"host": "localhost", "port": 5432}
+
+    with pytest.raises(ValueError, match="Database config is missing required keys"):
+        load_data_to_db(df, bad_config)

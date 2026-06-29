@@ -1,28 +1,20 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-import pytest
-from extract import extract_data
+from pathlib import Path
+
 import pytest
 from extract import extract_data
 
-def test_extract_data():
-    df = extract_data('csv/input_data.csv')
-    assert not df.empty, "Extracted data should not be empty"
-    assert 'existing_column' in df.columns, "Required column is missing"
 
-def test_extract_data_valid_file():
-    df = extract_data('csv/input_data.csv')
+def test_extract_data(csv_dir: Path):
+    df = extract_data(str(csv_dir / "input_data.csv"))
     assert not df.empty, "Extracted data should not be empty"
-    assert 'existing_column' in df.columns, "Required column is missing"
+    assert "existing_column" in df.columns, "Required column is missing"
 
-def test_extract_data_invalid_file():
+
+def test_extract_data_invalid_file(csv_dir: Path):
     with pytest.raises(FileNotFoundError):
-        extract_data('csv/non_existent_file.csv')
+        extract_data(str(csv_dir / "non_existent_file.csv"))
 
-def test_extract_data_empty_file():
-    with open('csv/empty_input.csv', 'w') as f:
-        f.write("")
 
-    df = extract_data('csv/empty_input.csv')
+def test_extract_data_empty_file(empty_csv_file: Path):
+    df = extract_data(str(empty_csv_file))
     assert df.empty, "Extracted data should be empty for an empty file"

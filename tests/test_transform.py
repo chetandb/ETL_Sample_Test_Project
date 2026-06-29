@@ -1,25 +1,27 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-import pytest
 import pandas as pd
+import pytest
+
 from transform import transform_data
 
+
 def test_transform_data_valid():
-    df = pd.DataFrame({'existing_column': [10, 20, 30]})
+    df = pd.DataFrame({"existing_column": [10, 20, 30]})
     transformed_df = transform_data(df)
 
-    assert 'new_column' in transformed_df.columns, "Transformation did not add new column"
-    assert all(transformed_df['new_column'] == [20, 40, 60]), "Transformation logic is incorrect"
+    assert "new_column" in transformed_df.columns, "Transformation did not add new column"
+    assert all(transformed_df["new_column"] == [20, 40, 60]), "Transformation logic is incorrect"
+    assert all(transformed_df["status"] == ["Low", "Low", "High"]), "Status values are incorrect"
+
 
 def test_transform_data_empty():
-    df = pd.DataFrame({'existing_column': []})
+    df = pd.DataFrame({"existing_column": []})
     transformed_df = transform_data(df)
 
     assert transformed_df.empty, "Transformed DataFrame should be empty for empty input"
 
-def test_transform_data_missing_column():
-    df = pd.DataFrame({'different_column': [10, 20, 30]})
 
-    with pytest.raises(KeyError):
+def test_transform_data_missing_column():
+    df = pd.DataFrame({"different_column": [10, 20, 30]})
+
+    with pytest.raises(ValueError, match="Missing required column"):
         transform_data(df)

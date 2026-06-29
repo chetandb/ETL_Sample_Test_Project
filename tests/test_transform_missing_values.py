@@ -1,16 +1,11 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 import pandas as pd
 from transform import transform_data
 
 def test_missing_values_transformation():
-    # Sample data with missing values
-    df = pd.DataFrame({'existing_column': [10, None, 30, None, 50]})
+    df = pd.DataFrame({"existing_column": [10, None, 30, None, 50]})
     transformed_df = transform_data(df)
-    # Check if missing values are filled with 0
-    assert transformed_df['existing_column'].isna().sum() == 0, "Missing values should be handled"
-    # Check if new_column is correctly calculated
-    assert 'new_column' in transformed_df.columns, "Transformation should add new_column"
+
+    assert transformed_df["existing_column"].isna().sum() == 0, "Missing values should be handled"
+    assert "new_column" in transformed_df.columns, "Transformation should add new_column"
     expected_new_column = [20, 0, 60, 0, 100]
-    assert all(transformed_df['new_column'] == expected_new_column), "Transformation logic is incorrect"
+    assert all(transformed_df["new_column"] == expected_new_column), "Transformation logic is incorrect"
