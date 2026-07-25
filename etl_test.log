@@ -1,6 +1,32 @@
-INFO     extract:extract.py:26 Successfully extracted 5 rows from C:\Chetan\code\ETL\ETL_Sample_Test_Project\csv\input_data.csv
-WARNING  extract:extract.py:17 Input file is empty: C:\Users\Admin\AppData\Local\Temp\pytest-of-Admin\pytest-7\test_extract_data_empty_file0\empty_input.csv
-WARNING  extract:extract.py:23 CSV file contains no data: C:\Users\Admin\AppData\Local\Temp\pytest-of-Admin\pytest-7\test_extract_data_whitespace_o0\whitespace.csv
-INFO     extract:extract.py:26 Successfully extracted 5 rows from C:\Chetan\code\ETL\ETL_Sample_Test_Project\csv\input_data.csv
-INFO     load:load.py:36 Successfully loaded 3 rows to database
-INFO     load:load.py:27 DataFrame is empty; skipping database load.
+INFO     extract:extract.py:45 Successfully extracted 5 rows from C:\Users\Admin\.copilot\repos\copilot-worktrees\ETL_Sample_Test_Project\chetandb-didactic-tribble\csv\input_data.csv
+ERROR    extract:extract.py:36 Input file not found: C:\Users\Admin\.copilot\repos\copilot-worktrees\ETL_Sample_Test_Project\chetandb-didactic-tribble\csv\non_existent_file.csv
+WARNING  extract:extract.py:40 Input file is empty: C:\Users\Admin\AppData\Local\Temp\pytest-of-Admin\pytest-9\test_extract_data_empty_file0\empty_input.csv
+WARNING  extract:extract.py:48 CSV file contains no data: C:\Users\Admin\AppData\Local\Temp\pytest-of-Admin\pytest-9\test_extract_data_whitespace_o0\whitespace.csv
+ERROR    extract:extract.py:51 Failed to parse CSV file C:\Users\Admin\AppData\Local\Temp\pytest-of-Admin\pytest-9\test_extract_data_malformed_cs0\malformed.csv: Error tokenizing data. C error: Expected 2 fields in line 3, saw 3
+
+INFO     extract:extract.py:45 Successfully extracted 5 rows from C:\Users\Admin\.copilot\repos\copilot-worktrees\ETL_Sample_Test_Project\chetandb-didactic-tribble\csv\input_data.csv
+INFO     load:load.py:74 Successfully loaded 3 rows to database
+INFO     load:load.py:65 DataFrame is empty; skipping database load.
+ERROR    load:load.py:76 Failed to load data to database: Database Write Error
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 1 rows marked as 'High', 2 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 0 rows marked as 'High', 0 rows marked as 'Low'
+ERROR    transform:transform.py:42 Column 'existing_column' not found in DataFrame
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 1 rows marked as 'High', 2 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'custom_col' with threshold 10
+INFO     transform:transform.py:60 Transformation complete: 1 rows marked as 'High', 2 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 0 rows marked as 'High', 3 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 3 rows marked as 'High', 2 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 2 rows marked as 'High', 3 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 1 rows marked as 'High', 2 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 2 rows marked as 'High', 3 rows marked as 'Low'
+INFO     transform:transform.py:45 Starting transformation on column 'existing_column' with threshold 25
+INFO     transform:transform.py:60 Transformation complete: 3 rows marked as 'High', 2 rows marked as 'Low'
