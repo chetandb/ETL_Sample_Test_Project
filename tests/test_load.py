@@ -7,7 +7,12 @@ from load import load_data_to_db
 
 def test_load_data_to_db_success(db_config):
     df = pd.DataFrame({"existing_column": [1, 2, 3], "new_column": [2, 4, 6]})
+    # Return a real SQLite in-memory engine so pandas.to_sql uses a supported engine
+    from sqlalchemy import create_engine as sa_create_engine
+
     with patch("load.create_engine") as mock_create_engine:
+        engine = sa_create_engine("sqlite:///:memory:")
+        mock_create_engine.return_value = engine
         load_data_to_db(df, db_config)
         mock_create_engine.assert_called_once()
 
