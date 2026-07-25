@@ -1,0 +1,4 @@
+INFO     extract:extract.py:26 Successfully extracted 5 rows from C:\Chetan\code\ETL\ETL_Sample_Test_Project\csv\input_data.csv
+WARNING  extract:extract.py:17 Input file is empty: C:\Users\Admin\AppData\Local\Temp\pytest-of-Admin\pytest-3\test_extract_data_empty_file0\empty_input.csv
+INFO     load:load.py:36 Successfully loaded 3 rows to database
+INFO     load:load.py:27 DataFrame is empty; skipping database load.
