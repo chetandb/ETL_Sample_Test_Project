@@ -5,7 +5,7 @@ This project is a sample implementation of an ETL (Extract, Transform, Load) pip
 
 ## Features
 - ✅ **Comprehensive ETL Pipeline**: Extract, Transform, and Load data processing
-- ✅ **Robust Testing Suite**: 13+ unit tests covering all components
+- ✅ **Robust Testing Suite**: 23 unit tests covering all components
 - ✅ **HTML Test Reports**: Beautiful, detailed test reports with pytest-html
 - ✅ **Logging Support**: Comprehensive logging for debugging and monitoring
 - ✅ **Mock Database Integration**: Safe testing without real database connections
@@ -51,10 +51,10 @@ This project includes comprehensive test coverage:
 
 | Module | Tests | Coverage |
 |--------|-------|----------|
-| Extract | 4 tests | File validation, empty files, invalid paths |
-| Transform | 7 tests | Data transformation, missing values, constraints |
-| Load | 2 tests | Database operations, empty data handling |
-| **Total** | **13 tests** | **100% pass rate** |
+| Extract | 6 tests | File validation, empty files, invalid paths, whitespace, parsing issues, path objects |
+| Transform | 12 tests | Data transformation, missing values, constraints, boundaries, custom parameters, type error handling, nulls |
+| Load | 5 tests | Database operations, empty data handling, error handling resource disposal, configuration verification |
+| **Total** | **23 tests** | **100% pass rate** |
 
 ### Test Categories:
 - ✅ **Basic Functionality**: Core ETL operations

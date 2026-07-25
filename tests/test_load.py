@@ -30,3 +30,33 @@ def test_load_data_to_db_missing_config():
 
     with pytest.raises(ValueError, match="Database config is missing required keys"):
         load_data_to_db(df, bad_config)
+
+
+def test_load_data_to_db_failure_disposes_engine(db_config):
+    df = pd.DataFrame({"existing_column": [1, 2, 3]})
+    from unittest.mock import MagicMock
+
+    with patch("load.create_engine") as mock_create_engine, \
+         patch("pandas.DataFrame.to_sql", side_effect=Exception("Database Write Error")) as mock_to_sql:
+        
+        mock_engine = MagicMock()
+        mock_create_engine.return_value = mock_engine
+
+        with pytest.raises(Exception, match="Database Write Error"):
+            load_data_to_db(df, db_config)
+
+        # Verify that even when to_sql fails, engine.dispose() is called
+        mock_engine.dispose.assert_called_once()
+
+
+def test_load_data_to_db_missing_config_details():
+    df = pd.DataFrame({"existing_column": [1]})
+    # REQUIRED_CONFIG_KEYS = {"host", "port", "user", "password", "dbname"}
+    # We supply user and dbname; missing: host, password, port
+    bad_config = {"user": "etl_user", "dbname": "etl_db"}
+
+    # Expected sorted missing keys: ['host', 'password', 'port']
+    expected_error_msg = "Database config is missing required keys: \\['host', 'password', 'port'\\]"
+    with pytest.raises(ValueError, match=expected_error_msg):
+        load_data_to_db(df, bad_config)
+
